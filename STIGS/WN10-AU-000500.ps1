@@ -45,46 +45,28 @@ Write-Host "Successfully set $valueName to $($setValue.$valueName) at $registryP
 
 # Windows Security Configuration Automation - STIG Compliance
 
-## Overview
+<h2>Manual Configuration</h2>
 
-This project demonstrates how I implemented a fix for the STIG ID **WN10-AU-000500**, which mandates that the **Application Event Log's maximum size** be set to **32768 KB** or greater. 
-
-### Manual Configuration
-
-1. **Tenable Scan**: Initially, I ran a Tenable scan using the **Windows Compliance Checks** plugin on a target VM, identifying 137 failed items. Among them, the **WN10-AU-000500** was flagged.
+<p>1. <b>Tenable Scan</b>: Initially, I ran a Tenable scan using the <b>Windows Compliance Checks</b> plugin on a target VM, identifying 137 failed items. Among them, the <b>WN10-AU-000500</b> was flagged.</p>
 
 <p align="center">
-Initial Scan Result: <br/>
-<img src="https://imgur.com/a/gUadrf4" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<br />
-2. **Manual Fix**: 
-   - I identified that the **Application Event Log** maximum size was not configured correctly. According to the STIG, this value should be **32768 KB** or greater.
-   - After researching on **stigaview.com**, I implemented the fix manually:
-     1. Opened the **Registry Editor**.
-     2. Navigated to `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows`.
-     3. Created the missing **EventLog** key, and then the **Application** subkey.
-     4. Created a **DWORD** value named `MaxSize` and set it to `32768` (decimal).
-     5. Restarted the VM and performed a follow-up Tenable scan to confirm that the STIG was now passed.
+  Initial Scan Result: <br/>
+  <img src="https://example.com/scan-result.png" height="80%" width="80%" alt="Initial Scan Result"/>
+</p>
 
-   ![Registry Editor - Manual Fix](images/registry-editor-manual-fix.png)
+<p>2. <b>Manual Fix</b>: 
+   - I identified that the <b>Application Event Log</b> maximum size was not configured correctly. According to the STIG, this value should be <b>32768 KB</b> or greater.
+   - After researching on <b>stigaview.com</b>, I implemented the fix manually:
+     <ol>
+       <li>Opened the <b>Registry Editor</b>.</li>
+       <li>Navigated to <code>HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows</code>.</li>
+       <li>Created the missing <b>EventLog</b> key, and then the <b>Application</b> subkey.</li>
+       <li>Created a <b>DWORD</b> value named <code>MaxSize</code> and set it to <b>32768</b> (decimal).</li>
+       <li>Restarted the VM and performed a follow-up Tenable scan to confirm that the STIG was now passed.</li>
+     </ol>
+</p>
 
-### Automation with PowerShell
-
-After manually fixing the issue, I explored automating the process using PowerShell to replicate the registry changes.
-
-1. **PowerShell Script**: Using ChatGPT, I generated a PowerShell script to automate the registry modifications.
-2. **Testing the Script**:
-   - I ran the PowerShell script in **PowerShell**.
-   - I performed a scan, and it confirmed that the STIG passed successfully.
-
-   ![PowerShell Script Output](images/powershell-script-output.png)
-
-### Validation
-
-To validate the fix:
-1. I removed the registry modification and rescanned, which resulted in the STIG failing.
-2. I then reapplied the PowerShell script, and the STIG passed again, confirming that the automated solution worked as intended.
-
-### Conclusion
-
-This project blends **manual configuration** with a **scalable, script-based solution**, ensuring that the system adheres to security best practices while being efficient and automatable.
+<p align="center">
+  Registry Editor - Manual Fix: <br/>
+  <img src="images/registry-editor-manual-fix.png" height="80%" width="80%" alt="Registry Editor - Manual Fix"/>
+</p>
