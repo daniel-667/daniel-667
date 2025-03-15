@@ -53,7 +53,7 @@ This project demonstrates how I implemented a fix for the STIG ID **WN10-AU-0005
 
 1. **Tenable Scan**: Initially, I ran a Tenable scan using the **Windows Compliance Checks** plugin on a target VM, identifying 137 failed items. Among them, the **WN10-AU-000500** was flagged.
 
-   <p align="center">
+<p align="center">
 Initial Scan Result: <br/>
 <img src="https://imgur.com/a/gUadrf4" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
