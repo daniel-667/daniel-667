@@ -45,28 +45,24 @@ Write-Host "Successfully set $valueName to $($setValue.$valueName) at $registryP
 
 # Windows Security Configuration Automation - STIG Compliance
 
-<h2>Manual Configuration</h2>
+## Manual Configuration
 
-<p>1. <b>Tenable Scan</b>: Initially, I ran a Tenable scan using the <b>Windows Compliance Checks</b> plugin on a target VM, identifying 137 failed items. Among them, the <b>WN10-AU-000500</b> was flagged.</p>
-
-<p align="center">
-  Initial Scan Result: <br/>
-  <img src="https://example.com/scan-result.png" height="80%" width="80%" alt="Initial Scan Result"/>
-</p>
-
-<p>2. <b>Manual Fix</b>: 
-   - I identified that the <b>Application Event Log</b> maximum size was not configured correctly. According to the STIG, this value should be <b>32768 KB</b> or greater.
-   - After researching on <b>stigaview.com</b>, I implemented the fix manually:
-     <ol>
-       <li>Opened the <b>Registry Editor</b>.</li>
-       <li>Navigated to <code>HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows</code>.</li>
-       <li>Created the missing <b>EventLog</b> key, and then the <b>Application</b> subkey.</li>
-       <li>Created a <b>DWORD</b> value named <code>MaxSize</code> and set it to <b>32768</b> (decimal).</li>
-       <li>Restarted the VM and performed a follow-up Tenable scan to confirm that the STIG was now passed.</li>
-     </ol>
-</p>
+1. **Tenable Scan**: Initially, I ran a Tenable scan using the **Windows Compliance Checks** plugin on a target VM, identifying 137 failed items. Among them, the **WN10-AU-000500** was flagged.
 
 <p align="center">
-  Registry Editor - Manual Fix: <br/>
-  <img src="images/registry-editor-manual-fix.png" height="80%" width="80%" alt="Registry Editor - Manual Fix"/>
+Initial Scan Result: <br/>
+![Initial Scan Result](https://imgur.com/a/gUadrf4)
 </p>
+
+2. **Manual Fix**: 
+   - I identified that the **Application Event Log** maximum size was not configured correctly. According to the STIG, this value should be **32768 KB** or greater.
+   - After researching on **stigaview.com**, I implemented the fix manually:
+     1. Opened the **Registry Editor**.
+     2. Navigated to `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows`.
+     3. Created the missing **EventLog** key, and then the **Application** subkey.
+     4. Created a **DWORD** value named `MaxSize` and set it to **32768** (decimal).
+     5. Restarted the VM and performed a follow-up Tenable scan to confirm that the STIG was now passed.
+
+   ![Registry Editor - Manual Fix](images/registry-editor-manual-fix.png)
+
+
