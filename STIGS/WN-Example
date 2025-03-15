@@ -1,41 +1,58 @@
-# Windows Security Configuration Automation - STIG Compliance
+<h1>JWipe - Disk Sanitization</h1>
 
-## Overview
+ ### [YouTube Demonstration](https://youtu.be/7eJexJVCqJo)
 
-This project demonstrates how I implemented a fix for the STIG ID **WN10-AU-000500**, which mandates that the **Application Event Log's maximum size** be set to **32768 KB** or greater. 
+<h2>Description</h2>
+Project consists of a simple PowerShell script that walks the user through "zeroing out" (wiping) any drives that are connected to the system. The utility allows you to select the target disk and choose the number of passes that are performed. The PowerShell script will configure a diskpart script file based on the user's selections and then launch Diskpart to perform the disk sanitization.
+<br />
 
-### Manual Configuration
 
-1. **Tenable Scan**: Initially, I ran a Tenable scan using the **Windows Compliance Checks** plugin on a target VM, identifying 137 failed items. Among them, the **WN10-AU-000500** was flagged.
-   
-2. **Manual Fix**: 
-   - I identified that the **Application Event Log** maximum size was not configured correctly. According to the STIG, this value should be **32768 KB** or greater.
-   - After researching on **stigaview.com**, I implemented the fix manually:
-     1. Opened the **Registry Editor**.
-     2. Navigated to `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows`.
-     3. Created the missing **EventLog** key, and then the **Application** subkey.
-     4. Created a **DWORD** value named `MaxSize` and set it to `32768` (decimal).
-     5. Restarted the VM and performed a follow-up Tenable scan to confirm that the STIG was now passed.
+<h2>Languages and Utilities Used</h2>
 
-   ![Registry Editor - Manual Fix](https://imgur.com/a/gUadrf4)
+- <b>PowerShell</b> 
+- <b>Diskpart</b>
 
-### Automation with PowerShell
+<h2>Environments Used </h2>
 
-After manually fixing the issue, I explored automating the process using PowerShell to replicate the registry changes.
+- <b>Windows 10</b> (21H2)
 
-1. **PowerShell Script**: Using ChatGPT, I generated a PowerShell script to automate the registry modifications.
-2. **Testing the Script**:
-   - I ran the PowerShell script in **PowerShell**.
-   - I performed a scan, and it confirmed that the STIG passed successfully.
+<h2>Program walk-through:</h2>
 
-   ![PowerShell Script Output](images/powershell-script-output.png)
+<p align="center">
+Launch the utility: <br/>
+<img src="https://i.imgur.com/62TgaWL.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Select the disk:  <br/>
+<img src="https://i.imgur.com/tcTyMUE.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Enter the number of passes: <br/>
+<img src="https://i.imgur.com/nCIbXbg.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Confirm your selection:  <br/>
+<img src="https://i.imgur.com/cdFHBiU.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Wait for process to complete (may take some time):  <br/>
+<img src="https://i.imgur.com/JL945Ga.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Sanitization complete:  <br/>
+<img src="https://i.imgur.com/K71yaM2.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Observe the wiped disk:  <br/>
+<img src="https://i.imgur.com/AeZkvFQ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
 
-### Validation
-
-To validate the fix:
-1. I removed the registry modification and rescanned, which resulted in the STIG failing.
-2. I then reapplied the PowerShell script, and the STIG passed again, confirming that the automated solution worked as intended.
-
-### Conclusion
-
-This project blends **manual configuration** with a **scalable, script-based solution**, ensuring that the system adheres to security best practices while being efficient and automatable.
+<!--
+ ```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
+--!>
